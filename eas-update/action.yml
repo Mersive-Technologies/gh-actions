@@ -55,5 +55,5 @@ runs:
         token: ${{ inputs.expo-token }}
 
     - name: Create EAS update
-      run: eas update --branch="${{ inputs.branch }}" --message="${{ input.message }}" --non-interactive
+      run: eas update --branch="${{ inputs.branch }}" --message="${{ inputs.message }}" --non-interactive
       shell: bash
