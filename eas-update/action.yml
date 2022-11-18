@@ -63,7 +63,7 @@ runs:
       with:
         expo-version: latest
         eas-version: latest
-        token: ${{ secrets.expo-token }}
+        token: ${{ inputs.expo-token }}
 
     - name: Create EAS update
       run: eas update --branch="${{ inputs.branch }}" --message="${{ input.message }}" --non-interactive
