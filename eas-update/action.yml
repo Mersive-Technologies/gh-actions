@@ -39,24 +39,13 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Setup project
+      uses: Mersive-Technologies/gh-actions/expo-setup@v1
       with:
-        lfs: ${{ inputs.lfs }}
-
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ inputs.node-version }}
-        cache: yarn
-
-    - name: Authenticate with artifactory
-      run: npx -y npm-cli-login -u ${{ inputs.npm-user }} -p ${{ inputs.npm-pass }} -e ${{ inputs.npm-email }} -r ${{ inputs.npm-repository }} -s ${{ inputs.npm-scope }}
-      shell: bash
-
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-      shell: bash
+        npm-user: ${{ inputs.npm-user }}
+        npm-pass: ${{ inputs.npm-pass }}
+        npm-email: ${{ inputs.npm-email }}
+        lfs: true
 
     - name: Setup Expo and EAS
       uses: expo/expo-github-action@v7
