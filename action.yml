@@ -1,0 +1,49 @@
+name: 'Setup Expo Project (with Yarn)'
+description: 'Setup an expo project with access to Mersive artifactory.'
+inputs:
+  npm-repository:
+    description: 'NPM repository to authenticate against.'
+    required: false
+    default: 'https://artifactory.mersive.xyz/artifactory/api/npm/npm'
+  npm-scope:
+    description: 'NPM repository scope.'
+    required: false
+    default: '@mersive'
+  npm-user:
+    description: 'NPM username used for authentication.'
+    required: true
+  npm-pass:
+    description: 'NPM password used for authentication.'
+    required: true
+  npm-email:
+    description: 'NPM email used for authentication.'
+    required: true
+  lfs:
+    description: 'Whether or not the repository uses LFS.'
+    required: false
+    default: 'false'
+  node-version:
+    description: 'What version of Node to use.'
+    required: false
+    default: '16.x'
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        lfs: ${{ inputs.lfs }}
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: yarn
+
+    - name: Authenticate with artifactory
+      run: npx -y npm-cli-login -u ${{ inputs.npm-user }} -p ${{ inputs.npm-pass }} -e ${{ inputs.npm-email }} -r ${{ inputs.npm-repository }} -s ${{ inputs.npm-scope }}
+      shell: bash
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+      shell: bash
