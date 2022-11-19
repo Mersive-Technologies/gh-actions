@@ -6,8 +6,7 @@ inputs:
     required: true
   message:
     description: 'Update message.'
-    required: false
-    default: '${{ github.event.head_commit.message }}'
+    required: true
   expo-token:
     description: 'Expo authentication token'
     required: true
