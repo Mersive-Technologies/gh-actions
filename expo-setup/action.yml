@@ -26,6 +26,10 @@ inputs:
     description: 'What version of Node to use.'
     required: false
     default: '16.x'
+outputs:
+  cache-hit:
+    description: 'Whether we had a cache hit on node-setup or not.'
+    value: ${{ steps.setup-node.outputs.cache-hit }}
 runs:
   using: 'composite'
   steps:
@@ -35,6 +39,7 @@ runs:
         lfs: ${{ inputs.lfs }}
 
     - name: Setup Node
+      id: setup-node
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
