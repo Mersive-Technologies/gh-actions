@@ -1,4 +1,4 @@
-# Create EAS build for Expo (with Yarn) project
+# Publish EAS update for Expo (with Yarn) project
 
 This GitHub Action is intended to be used by worflows within Expo projects that use Yarn as the package manager.
 The action also configures NPM credentials for accessing Mersive's private NPM repository, allowing your application to have internal dependencies.
