@@ -4,6 +4,8 @@ This GitHub Action is intended to be used by worflows within Expo projects that 
 The action also configures NPM credentials for accessing Mersive's private NPM repository, allowing your application to have internal dependencies.
 Once the project is setup, an EAS build will be created.
 
+By default, a build is only created when we have a Yarn cache miss, unless you set `force: true`.
+
 
 ## Steps
 
