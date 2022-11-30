@@ -2,28 +2,68 @@ name: 'Download EAS Build'
 description: 'Download a build artifact from EAS'
 
 inputs:
-  expo-token:
-    description: 'Expo authentication token'
-    required: true
   channel:
     description: 'Target channel'
     required: true  # e.g., 'preview', 'development', 'production'
+
   platform:
     description: 'Target platform'
     required: true  # 'ios' | 'android'
+
   commit:
     description: 'Target git commit hash'
     required: false
     default: ${{ github.sha }}
+
   output:
     description: 'Path for the output build file'
     required: true
 
+  expo-token:
+    description: 'Expo authentication token'
+    required: true
+
+  npm-repository:
+    description: 'NPM repository to authenticate against.'
+    required: false
+    default: 'https://artifactory.mersive.xyz/artifactory/api/npm/npm'
+
+  npm-scope:
+    description: 'NPM repository scope.'
+    required: false
+    default: '@mersive'
+
+  npm-user:
+    description: 'NPM username used for authentication.'
+    required: true
+
+  npm-pass:
+    description: 'NPM password used for authentication.'
+    required: true
+
+  npm-email:
+    description: 'NPM email used for authentication.'
+    required: true
+
+  lfs:
+    description: 'Whether or not the repository uses LFS.'
+    required: false
+    default: 'true'
+
 runs:
   using: 'composite'
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Setup project
+      id: setup-project
+      uses: Mersive-Technologies/gh-actions/expo-setup@v1
+      with:
+        npm-repository: ${{ inputs.npm-repository }}
+        npm-scope: ${{ inputs.npm-scope }}
+        npm-user: ${{ inputs.npm-user }}
+        npm-pass: ${{ inputs.npm-pass }}
+        npm-email: ${{ inputs.npm-email }}
+        node-version: ${{ inputs.node-version }}
+        lfs: ${{ inputs.lfs }}
 
     - name: Setup Expo and EAS
       uses: expo/expo-github-action@v7

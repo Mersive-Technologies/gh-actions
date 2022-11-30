@@ -23,6 +23,5 @@ steps:
     npm-user: ${{ secrets.NPM_USER }}
     npm-pass: ${{ secrets.NPM_PASS }}
     npm-email: ${{ secrets.NPM_EMAIL }}
-    lfs: true
 ```
 

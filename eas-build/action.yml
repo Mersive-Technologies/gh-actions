@@ -1,46 +1,58 @@
 name: 'Create EAS Build'
 description: 'Setup an expo project and create EAS build'
+
 inputs:
   platform:
     description: 'Platform(s) to create builds for.'
     required: false
     default: 'all' # 'all' | 'android' | 'ios'
+
   profile:
     description: 'Build profile.'
     required: false
     default: 'development'
+
   force:
     description: 'Force build, even on a cache hit.'
     required: false
     default: 'false'
+
   expo-token:
     description: 'Expo authentication token'
     required: true
+
   npm-repository:
     description: 'NPM repository to authenticate against.'
     required: false
     default: 'https://artifactory.mersive.xyz/artifactory/api/npm/npm'
+
   npm-scope:
     description: 'NPM repository scope.'
     required: false
     default: '@mersive'
+
   npm-user:
     description: 'NPM username used for authentication.'
     required: true
+
   npm-pass:
     description: 'NPM password used for authentication.'
     required: true
+
   npm-email:
     description: 'NPM email used for authentication.'
     required: true
+
   lfs:
     description: 'Whether or not the repository uses LFS.'
     required: false
-    default: 'false'
+    default: 'true'
+
   node-version:
     description: 'What version of Node to use.'
     required: false
     default: '16.x'
+
 runs:
   using: 'composite'
   steps:
@@ -48,10 +60,13 @@ runs:
       id: setup-project
       uses: Mersive-Technologies/gh-actions/expo-setup@v1
       with:
+        npm-repository: ${{ inputs.npm-repository }}
+        npm-scope: ${{ inputs.npm-scope }}
         npm-user: ${{ inputs.npm-user }}
         npm-pass: ${{ inputs.npm-pass }}
         npm-email: ${{ inputs.npm-email }}
-        lfs: true
+        node-version: ${{ inputs.node-version }}
+        lfs: ${{ inputs.lfs }}
 
     - name: Setup Expo and EAS
       if: steps.setups-project.outputs.cache-hit == 'false' || inputs.force == 'true'

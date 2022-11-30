@@ -1,35 +1,44 @@
 name: 'Setup Expo Project (with Yarn)'
 description: 'Setup an expo project with access to Mersive artifactory.'
+
 inputs:
   npm-repository:
     description: 'NPM repository to authenticate against.'
     required: false
     default: 'https://artifactory.mersive.xyz/artifactory/api/npm/npm'
+
   npm-scope:
     description: 'NPM repository scope.'
     required: false
     default: '@mersive'
+
   npm-user:
     description: 'NPM username used for authentication.'
     required: true
+
   npm-pass:
     description: 'NPM password used for authentication.'
     required: true
+
   npm-email:
     description: 'NPM email used for authentication.'
     required: true
+
   lfs:
     description: 'Whether or not the repository uses LFS.'
     required: false
     default: 'false'
+
   node-version:
     description: 'What version of Node to use.'
     required: false
     default: '16.x'
+
 outputs:
   cache-hit:
     description: 'Whether we had a cache hit on node-setup or not.'
     value: ${{ steps.setup-node.outputs.cache-hit }}
+
 runs:
   using: 'composite'
   steps:
