@@ -1,0 +1,38 @@
+name: 'Download EAS Build'
+description: 'Download a build artifact from EAS'
+
+inputs:
+  expo-token:
+    description: 'Expo authentication token'
+    required: true
+  channel:
+    description: 'Target channel'
+    required: true  # e.g., 'preview', 'development', 'production'
+  platform:
+    description: 'Target platform'
+    required: true  # 'ios' | 'android'
+  commit:
+    description: 'Target git commit hash'
+    required: false
+    default: ${{ github.sha }}
+  output:
+    description: 'Path for the output build file'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Expo and EAS
+      uses: expo/expo-github-action@v7
+      with:
+        expo-version: latest
+        eas-version: latest
+        token: ${{ inputs.expo-token }}
+
+    - name: Download EAS build
+      run: |
+        eas build:list --non-interactive --json --limit=1 --gitCommitHash=${{ inputs.commit }} --channel=${{ inputs.channel }} --platform=${{ inputs.platform }} | jq '.[0].artifacts.buildUrl' | xargs curl -s -L -o ${{ inputs.output }}
+      shell: bash

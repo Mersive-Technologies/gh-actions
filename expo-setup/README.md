@@ -18,7 +18,7 @@ See [action.yml](action.yml)
 
 ```yaml
 steps:
-- uses: Mersive-Technologies/gh-action-expo-setup@v1
+- uses: Mersive-Technologies/gh-actions/expo-setup@v1
   with:
     npm-user: ${{ secrets.NPM_USER }}
     npm-pass: ${{ secrets.NPM_PASS }}

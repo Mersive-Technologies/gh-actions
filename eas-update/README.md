@@ -21,7 +21,7 @@ See [action.yml](action.yml)
 
 ```yaml
 steps:
-- uses: Mersive-Technologies/gh-action-eas-build@v1
+- uses: Mersive-Technologies/gh-actions/eas-build@v1
   with:
     branch: preview
     expo-token: ${{ secrets.EXPO_TOKEN }}
