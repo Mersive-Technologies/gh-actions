@@ -27,7 +27,7 @@ inputs:
   lfs:
     description: 'Whether or not the repository uses LFS.'
     required: false
-    default: 'false'
+    default: 'true'
 
   node-version:
     description: 'What version of Node to use.'
